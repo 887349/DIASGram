@@ -19,7 +19,7 @@ class Tensor
 {
 private:
 
-    float * data;
+    float *data;
 
     int c;
     int r; 
