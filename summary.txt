@@ -1,0 +1,33 @@
+make testbmp : esegue il programma e crea una scacchiera colorata
+
+TENSOR.H / TENSOR.CPP
+	tensor è una matrice a 3 dimensioni (altezza x larghezza x canali) float --> float * data;
+										( riga   x  colonna  x profondita)
+	la struttura di memoria della variabile data non può essere un'oggetto di Vector ne di Array
+
+	1) implementare gli operatori matematici (+ - * / ), di selezione (i ,j , k) e quello di assegnamento ( = )
+	
+	2) implementare convolve(): moltiplicazione tra matrici(calcolo della convulzione)
+		CALCOLO PADDING
+			P = (dimFiltro - 1) / 2
+			da calcolare sia per la parte orizzontale che verticale del filtro
+		CONVERSIONE VALORI NEL CAMPO DATA
+			clamp(): vincola l'intervallo di valori tra un valore minimo e un valore massimo
+			rescale(): porta i valori del tensore in [0, new_max] T = ( (T - min(T)) / (max(T) - min(T)) )
+		FILTRI
+			sharpen():
+			edge(): per primo convertire l'immagini in scala di grigi all'interno del metodo edge()
+			emboss():
+			smooth():
+		
+		le immagini hanno matrici a 3 dimensioni ma i filtri 2. 
+		Se lo stesso filtro è applicato a più canali (filtro e immagine hanno la stessa depth) vogliamo avere filtri diversi per ogni canale (uno per il canare rosso, uno per il verde, uno per il blu)
+		
+DIASGRAM.H / DIASGRAM.CPP
+	1) brighten(): aumenta il valore di tutti i pixel di una costante bright
+	2) grayscale(): converte un'immagine da colori a grigi
+	3) blend(): fonde due immagini (due immagini diventano una)
+			Blend = alpha * A + (1-alpha) * B
+			nota: immagini A e B devono avere le stesse dimensioni (usare le eccezioni)
+	4) warhol(): crea una nuova immagine contenente 4 immagini (originale, rosso->verde, verde->blu, rosso->blu)
+			  immagine finale con dimensione doppia dell'originale
