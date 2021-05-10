@@ -6,6 +6,7 @@
 
 #include "dais_exc.h"
 #include "tensor.h"
+#include "vector_lib\static_array.h"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */
@@ -39,4 +40,12 @@ void Tensor::init_random(float mean, float std){
     }else{
         throw(tensor_not_initialized());
     }
+}
+
+Tensor::Tensor(){
+    data = static_matrix_create();
+
+    r = 0; // number of rows
+    c = 0; // number of columns
+    d = 0; // tensor depth
 }

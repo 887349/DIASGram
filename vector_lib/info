@@ -1,0 +1,32 @@
+vettore bidimensionale (N righe M colonne)
+	1) Linearizzazione 
+		int* mat = new int[N*M] //int[5*5]
+		|...|...|...|...|...|...|...|...|...|...|
+		i=2,j=1 --> mat[i*colonne+j]
+	
+		delete[] mat;
+		
+	2) Array Frastagliati
+		|...| -> |...|...|
+		|...| -> |...|...|
+		|...| -> |...|...|
+		int** v;
+		v = new int*[D];
+		for(int i = 0; i < D; i++)
+			v[i] = new int[R*C];
+		
+		v[i][j] = 24; 
+		
+		for(int i = 0; i < n; i++)
+			delete[] v[i];
+		delete[] v;
+	
+array di 3:
+        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c 
+        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c
+        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c
+
+        todo:
+            inizializzare array di 3 puntatori
+            ogni cella dell'array punta ad un array statico da allocare pure quello
+            

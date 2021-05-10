@@ -1,12 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 #include "static_array.h"
 
 TYPE *static_create(int dim){
     TYPE *arr;
-    arr = calloc(dim, sizeof(TYPE));
+    arr = new TYPE[dim];// (dim, sizeof(TYPE));
 
     return arr;
+}
+
+TYPE **static_pointer_create(int dim)
+{
+    TYPE **arr;
+    arr = new TYPE*[dim]; // (dim, sizeof(TYPE));
+
+    return arr;
+}
+
+TYPE* static_matrix_create(int d = 10, int r = 10, int c = 10, float v = 0.0){
+    float **data= static_pointer_create(d);
+
+    for(int i = 0; i < d; i++){
+        data[i] = static_create(r*c);
+    }
+
+    return *data;
 }
 
 void static_random_filler(TYPE *v, int dim){
@@ -62,35 +79,6 @@ void static_print_union(TYPE arr1[], TYPE arr2[], int len1, int len2) {
     }
 }
 
-void static_print_intersection(TYPE *arr1, TYPE *arr2, int len1, int len2) {
-    TYPE arr3[len1+len2];
-    int i/* primo array */, j/*secondo array*/, k = 0/* terzo array */;
-
-    /* ciclo il primo array */
-    for (i = 0; i < len1; i++) {
-        /* ciclo il secondo array */
-        for (j = 0; j < len2; j++) {
-            /* se il valore del secondo array è presente nel primo allora lo copia in arr3 */
-            if (arr1[i] == arr2[j]) {
-                arr3[k] = arr1[i];
-                /* incremento k manualmente solo se viene copiato un valore */
-                k++;
-            }
-        }
-    }
-
-
-    printf("\nIntersection of two array is:");
-    if(k == 0) {
-        printf("none\n");
-    }else {
-        for (i = 0; i < k; i++) {
-            printf("%d ", arr3[i]);
-        }
-    }
-    free(arr3);
-}
-
 void static_del_at_pos(TYPE *v, int dim, int pos){
     if(pos < 0 || pos > dim)
         printf("Posizione inesistente!");
@@ -137,7 +125,7 @@ TYPE *static_invert_v(TYPE *v, int dim){
 }
 
 void static_del(TYPE *v){
-    free(v);
+    delete v;
 }
 
 int static_get_value_pos(TYPE *v, int dim, TYPE value){
@@ -162,20 +150,10 @@ void static_print(TYPE *v, int dim){
 
 
 /*int main() {
-    int *arr1, *arr2;
-    arr1 = static_create(10);
-    //arr2 = static_create(5);
+    float *vect;
 
-    static_random_filler(arr1, 10);
-    //static_random_filler(arr2, 5);
-
-    modify_at_pos(arr1, 10, 3, 99);
-    v_print(arr1, 10);
-    del_value(arr1, 10, 99);
-    v_print(arr1, 10);
-
-    printf("\n\nValue pos: %d", get_value_pos(arr1, 10, 28));
-
-    static_del(arr1);
+    vect = static_create(10);
+    static_print(vect, 10);
+    stat
     return 0;
 }*/
