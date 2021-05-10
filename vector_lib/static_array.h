@@ -24,7 +24,7 @@ void modify_value(TYPE * v, int dim, TYPE previous, TYPE value);
 
 TYPE *invert_v(TYPE * v, int dim);
 
-void static_del(TYPE * v);
+void static_del(TYPE * v, int d);
 
 int get_value_pos(TYPE * v, int dim, TYPE value);
 

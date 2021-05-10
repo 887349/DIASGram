@@ -3,15 +3,14 @@
 
 TYPE *static_create(int dim){
     TYPE *arr;
-    arr = new TYPE[dim];// (dim, sizeof(TYPE));
-
+    arr = new TYPE[dim];
     return arr;
 }
 
 TYPE **static_pointer_create(int dim)
 {
     TYPE **arr;
-    arr = new TYPE*[dim]; // (dim, sizeof(TYPE));
+    arr = new TYPE*[dim];
 
     return arr;
 }
@@ -124,8 +123,11 @@ TYPE *static_invert_v(TYPE *v, int dim){
     return array;
 }
 
-void static_del(TYPE *v){
-    delete v;
+void static_del(TYPE *v, int d){
+    for(int i = 0; i < d; i++)
+		delete[] &(v[i]);
+	delete[] v;
+    
 }
 
 int static_get_value_pos(TYPE *v, int dim, TYPE value){
