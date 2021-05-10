@@ -3,7 +3,7 @@
 
 TYPE *static_create(int dim){
     TYPE *arr;
-    arr = new TYPE[dim];// (dim, sizeof(TYPE));
+    arr = new TYPE[dim]();
 
     return arr;
 }
@@ -11,12 +11,12 @@ TYPE *static_create(int dim){
 TYPE **static_pointer_create(int dim)
 {
     TYPE **arr;
-    arr = new TYPE*[dim]; // (dim, sizeof(TYPE));
+    arr = new TYPE*[dim]();
 
     return arr;
 }
 
-TYPE* static_matrix_create(int d = 3, int r = 2, int c = 2, float v = 0.0){
+TYPE* static_matrix_create(int d = 0, int r = 0, int c = 0, float v = 0.0){
     float **data= static_pointer_create(d);
 
     for(int i = 0; i < d; i++){
@@ -152,11 +152,17 @@ void static_print(TYPE *v, int dim){
 int main() {
     float *data;
 
-    data = static_matrix_create();
+    data = static_matrix_create(3, 2, 2);
 
     static_print(&data[0], 4);
     static_print(&data[1], 4);
     static_print(&data[2], 4);
+
+
+    static_del(&data[0]);
+    static_del(&data[1]);
+    static_del(&data[2]);
+    static_del(data);
 
     return 0;
 }

@@ -27,6 +27,5 @@ array di 3:
         |ptr| -> |matrice bidimensionale flattened|-> matrice r*c
 
         todo:
-            inizializzare array di 3 puntatori
-            ogni cella dell'array punta ad un array statico da allocare pure quello
+            riempire tutta la matrice;
             
