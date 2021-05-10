@@ -124,8 +124,10 @@ TYPE *static_invert_v(TYPE *v, int dim){
     return array;
 }
 
-void static_del(TYPE *v){
-    delete v;
+void static_del(TYPE *v, int d){
+    for(int i = 0; i < d; i++)
+		delete[] &v[i];
+	delete[] v;
 }
 
 int static_get_value_pos(TYPE *v, int dim, TYPE value){
@@ -159,10 +161,6 @@ int main() {
     static_print(&data[2], 4);
 
 
-    static_del(&data[0]);
-    static_del(&data[1]);
-    static_del(&data[2]);
-    static_del(data);
-
+    static_del(data, 3);
     return 0;
 }
