@@ -16,7 +16,7 @@ TYPE **static_pointer_create(int dim)
     return arr;
 }
 
-TYPE* static_matrix_create(int d = 10, int r = 10, int c = 10, float v = 0.0){
+TYPE* static_matrix_create(int d = 3, int r = 2, int c = 2, float v = 0.0){
     float **data= static_pointer_create(d);
 
     for(int i = 0; i < d; i++){
@@ -149,11 +149,14 @@ void static_print(TYPE *v, int dim){
 
 
 
-/*int main() {
-    float *vect;
+int main() {
+    float *data;
 
-    vect = static_create(10);
-    static_print(vect, 10);
-    stat
+    data = static_matrix_create();
+
+    static_print(&data[0], 4);
+    static_print(&data[1], 4);
+    static_print(&data[2], 4);
+
     return 0;
-}*/
+}

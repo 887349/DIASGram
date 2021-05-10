@@ -6,7 +6,7 @@ TYPE *static_create(int dim);
 
 TYPE **static_pointer_create(int dim);
 
-TYPE *static_matrix_create(int d = 10, int r = 10, int c = 10, float v = 0.0);
+TYPE *static_matrix_create(int d, int r, int c, float v);
 
 void v_random_filler(TYPE * v, int dim);
 
