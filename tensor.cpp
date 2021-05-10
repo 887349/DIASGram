@@ -152,16 +152,42 @@ int Tensor::depth()const {
     return d;
 }
     
+/*
+    K È DEEP (D)
+    PER ACCEDERE A UNA CELLA NELLA DEEP K FACCIO :
+        data[i*c+j][k] o data[k][i*c+j]
+    SECONDO ME QUELLO CHE HO SCRITTO NEL CODICE MA NON SONO SICURO 
+*/
 float Tensor::getMin(int k)const {
-    return 0;
+    float min = 0;data[k][0];
+    if (k<d) {
+        min = data[k][0];
+        for (int i=0; i<r; i++) {
+            for (int j=0; j<c; j++) {
+                if (data[k][i*c+j] < min)
+                    min = data[k][i*c+j];
+            }
+        }
+    }
+    return min;
 }
 
 float Tensor::getMax(int k)const {
-    return 0;
+    float max = 0;
+    if (k<d) {
+        max = data[k][0];
+        for (int i=0; i<r; i++) {
+            for (int j=0; j<c; j++) {
+                if (data[k][i*c+j] > max)
+                    max = data[k][i*c+j];
+            }
+        }
+    }
+    return max;
 }
 
 void Tensor::showSize()const {
-
+    std::cout << r << " x " << c << " x " << d <<std::endl;
 }
     
 /*friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj) {
