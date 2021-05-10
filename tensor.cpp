@@ -190,7 +190,8 @@ void Tensor::showSize()const {
     std::cout << r << " x " << c << " x " << d <<std::endl;
 }
     
-/*friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj) {
+/*
+friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj) {
     return *this;
 }*/
 

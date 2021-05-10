@@ -1,9 +1,9 @@
 #include <iostream>
 #include "static_array.h"
 
-TYPE *static_create(int dim){
+TYPE *static_create(int dim, TYPE n = 0.0){
     TYPE *arr;
-    arr = new TYPE[dim]();
+    arr = new TYPE[dim]{n};
 
     return arr;
 }
@@ -11,7 +11,7 @@ TYPE *static_create(int dim){
 TYPE **static_pointer_create(int dim)
 {
     TYPE **arr;
-    arr = new TYPE*[dim]();
+    arr = new TYPE*[dim]{nullptr};
 
     return arr;
 }
@@ -20,7 +20,7 @@ TYPE* static_matrix_create(int d = 0, int r = 0, int c = 0, float v = 0.0){
     float **data= static_pointer_create(d);
 
     for(int i = 0; i < d; i++){
-        data[i] = static_create(r*c);
+        data[i] = static_create(r*c, v);
     }
 
     return *data;
@@ -115,7 +115,7 @@ void static_modify_value(TYPE *v, int dim, TYPE previous, TYPE value){
 TYPE *static_invert_v(TYPE *v, int dim){
     int i, j = 0;
     TYPE *array;
-    array = static_create(dim);
+    array = static_create(dim, 0.0);
 
     for (i = dim-1; i >= 0; i--, j++){
         array[j] = v[i];
@@ -158,7 +158,7 @@ int main() {
 
     static_print(&data[0], 4);
     static_print(&data[1], 4);
-    static_print(&data[2], 4);
+    static_print(&data[2], 4 );
 
 
     static_del(data, 3);
