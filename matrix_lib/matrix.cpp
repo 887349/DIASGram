@@ -34,32 +34,57 @@ void matrix_print(TYPE **&data, int d = 0, int r = 0, int c = 0){
     }
 }
 
-void matrix_init(TYPE **&data, float v = 0.0){
+void matrix_init(TYPE **&data, float v = 0.0, int d = 0, int r = 0, int c = 0)
+{
 
-    for (int k = 0; k < 3; k++)
+    for (int k = 0; k < d; k++)
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < r; i++)
         {
-            for (int j = 0; j < 2; j++)
+            for (int j = 0; j < c; j++)
             {
-                data[k][i * 2 + j] = rand()%1000;
+                data[k][i * c + j] = rand()%10;
             }
         }
     }
 }
 
+/* copy constructor test
+TYPE **copy_constr(TYPE **&that, int d = 0, int r = 0, int c = 0)
+{
+    TYPE **data;
 
+    data = static_matrix_create(d, r, c);
 
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                data[k][i * 2 + j] = that[k][i * 2 + j];
+            }
+        }
+    }
+
+    return data;
+}
+*/
+
+/*main to test various functions*/
 int main() {
-    float **data;
+    float **that, **data;
 
-    data = static_matrix_create(3, 2, 2);
+    that = static_matrix_create(3, 2, 2);
+    matrix_init(that, 10, 3, 2, 2);
+    data = copy_constr(that, 3, 2, 2);
 
-    matrix_init(data, 10);
-    matrix_print(data, 3, 2, 2);
+    matrix_print(that, 3, 2, 2);
+    std::cout << "----------" << std::endl;
+    matrix_print(data, 4, 2, 2);
 
-    matrix_del(data, 3);
-
+    matrix_del(that, 3);
+    matrix_del(data, 4);
 
     return 0;
 }

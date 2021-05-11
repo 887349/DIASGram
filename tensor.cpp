@@ -60,7 +60,19 @@ Tensor::Tensor(int r, int c, int d, float v=0.0) {
 }
 
 Tensor::Tensor(const Tensor& that) {
+    data = static_matrix_create(that.d, that.r, that.c);
 
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                data[k][i * 2 + j] = that.data[k][i * 2 + j];
+            }
+        }
+    }
+
+    r = that.r;
+    c = that.c;
+    d = that.d;
 }
 
 Tensor::~Tensor() {
@@ -85,8 +97,16 @@ float Tensor::operator()(int i, int j, int k) const {
 }
 
 float& Tensor::operator()(int i, int j, int k) {
-    float* a;
-    return *a;
+    float *res;
+
+    if (i < d || i < d)
+        throw(index_out_of_bound());
+    else if (j < r || j < r)
+        throw(index_out_of_bound());
+    else if (i < c || i < c)
+        throw(index_out_of_bound());
+    else
+        return data[k][(i * c) + j];
 }
 
 Tensor Tensor::operator-(const Tensor &rhs)const {
