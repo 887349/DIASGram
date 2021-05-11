@@ -6,7 +6,7 @@
 
 #include "dais_exc.h"
 #include "tensor.h"
-#include "vector_lib\matrix.h"
+#include "matrix_lib\matrix.h"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */

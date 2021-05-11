@@ -22,9 +22,9 @@ vettore bidimensionale (N righe M colonne)
 		delete[] v;
 	
 array di 3:
-        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c 
-        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c
-        |ptr| -> |matrice bidimensionale flattened|-> matrice r*c
+        |ptr| -> |matrice bidimensionale flattened|--cioè--> matrice r*c 
+        |ptr| -> |matrice bidimensionale flattened|--cioè--> matrice r*c
+        |ptr| -> |matrice bidimensionale flattened|--cioè--> matrice r*c
 
         todo:
             riempire tutta la matrice;
