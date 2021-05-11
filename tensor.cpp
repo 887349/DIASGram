@@ -6,7 +6,7 @@
 
 #include "dais_exc.h"
 #include "tensor.h"
-#include "vector_lib\static_array.h"
+#include "vector_lib\matrix.h"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */
@@ -41,9 +41,9 @@ void Tensor::init_random(float mean, float std){
         throw(tensor_not_initialized());
     }
 }
-
+ 
 Tensor::Tensor(){
-    data = static_matrix_create(0,0,0,0.0);
+    data = static_matrix_create(0, 0, 0);
 
     r = 0; // number of rows
     c = 0; // number of columns
@@ -51,7 +51,12 @@ Tensor::Tensor(){
 }
 
 Tensor::Tensor(int r, int c, int d, float v=0.0) {
+    data = static_matrix_create(d, r, c);
+    matrix_init(data, v);
 
+    r = r; // number of rows
+    c = c; // number of columns
+    d = d; // tensor depth
 }
 
 Tensor::Tensor(const Tensor& that) {
@@ -59,11 +64,24 @@ Tensor::Tensor(const Tensor& that) {
 }
 
 Tensor::~Tensor() {
-    static_del(data, d);
+    matrix_del(data, d);
 }
 
 float Tensor::operator()(int i, int j, int k) const {
-    return 0;
+    float res{0.0};
+
+    if(i < d || i < d)
+        throw(index_out_of_bound());
+    else if (j < r || j < r)
+        throw(index_out_of_bound());
+    else if (i < c || i < c)
+        throw(index_out_of_bound());
+    else{
+        
+        res = data[k][(i*c)+j];
+    }
+
+    return res;
 }
 
 float& Tensor::operator()(int i, int j, int k) {
@@ -152,15 +170,11 @@ int Tensor::depth()const {
     return d;
 }
     
-/*
-    K È DEEP (D)
-    PER ACCEDERE A UNA CELLA NELLA DEEP K FACCIO :
-        data[i*c+j][k] o data[k][i*c+j]
-    SECONDO ME QUELLO CHE HO SCRITTO NEL CODICE MA NON SONO SICURO 
-*/
-/*float Tensor::getMin(int k)const {
-    float min = 0;data[k][0];
-    if (k<d) {
+
+/* ADD THROW ERROR
+float Tensor::getMin(int k)const {
+    float min = 0;
+    if (k<d && k>=0) {
         min = data[k][0];
         for (int i=0; i<r; i++) {
             for (int j=0; j<c; j++) {
@@ -168,13 +182,15 @@ int Tensor::depth()const {
                     min = data[k][i*c+j];
             }
         }
+    } else {
+        throw(index_out_of_bound());
     }
     return min;
-}*/
+}
 
-/*float Tensor::getMax(int k)const {
+float Tensor::getMax(int k)const {
     float max = 0;
-    if (k<d) {
+    if (k<d && k>=0) {
         max = data[k][0];
         for (int i=0; i<r; i++) {
             for (int j=0; j<c; j++) {
@@ -182,9 +198,12 @@ int Tensor::depth()const {
                     max = data[k][i*c+j];
             }
         }
+    } else {
+        throw(index_out_of_bound());
     }
     return max;
-}*/
+}
+*/
 
 void Tensor::showSize()const {
     std::cout << r << " x " << c << " x " << d <<std::endl;
