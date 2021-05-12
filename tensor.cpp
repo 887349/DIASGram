@@ -116,7 +116,7 @@ Tensor Tensor::operator-(const Tensor &rhs)const {
     else if (d < rhs.d || d > rhs.d)
         throw(dimension_mismatch());
 
-    Tensor temp;
+    Tensor temp(r, c, d);
 
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
@@ -141,7 +141,7 @@ Tensor Tensor::operator +(const Tensor &rhs)const {
     else if (d < rhs.d || d > rhs.d)
         throw(dimension_mismatch());
 
-    Tensor temp;
+    Tensor temp(r, c, d);
 
     for (int k = 0; k < d; k++)
     {
@@ -170,7 +170,7 @@ Tensor Tensor::operator*(const Tensor &rhs)const
     else if (d < rhs.d || d > rhs.d)
         throw(dimension_mismatch());
 
-    Tensor temp;
+    Tensor temp(r, c, d);
 
     for (int k = 0; k < d; k++)
     {
@@ -199,7 +199,7 @@ Tensor Tensor::operator/(const Tensor &rhs)const
     else if (d < rhs.d || d > rhs.d)
         throw(dimension_mismatch());
 
-    Tensor temp;
+    Tensor temp(r, c, d);
 
     for (int k = 0; k < d; k++)
     {
@@ -229,7 +229,7 @@ Tensor Tensor::operator+(const float &rhs)const {
 
 Tensor Tensor::operator*(const float &rhs)const {
 
-    Tensor temp;
+    Tensor temp(r, c, d);
 
     for (int k = 0; k < d; k++)
     {
@@ -253,7 +253,7 @@ Tensor Tensor::operator/(const float &rhs)const {
     return *this;
 }
 
-Tensor & Tensor::operator=(const Tensor &other) {
+Tensor &Tensor::operator=(const Tensor &other) {
     
     matrix_del(this->data, this->d);
     this->data = static_matrix_create(other.d, other.r, other.c);
@@ -284,14 +284,28 @@ void Tensor::init(int r, int c, int d, float v=0.0) {
         {
             for (int j = 0; j < c; j++)
             {
-                this->data[k][i * c + j] * v;
+                data[k][i * c + j] * v;
             }
         }
     }
 }
 
 void Tensor::clamp(float low, float high) {
+    float *temp;
 
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp = &data[k][i * c + j];
+                if(*temp < low)
+                    *temp = low;
+                else if(*temp > high)
+                    *temp = high;
+                else    
+                    continue;
+            }
+        }
+    }
 }
 
 void Tensor::rescale(float new_max=1.0) {
