@@ -6,7 +6,7 @@
 
 #include "dais_exc.h"
 #include "tensor.h"
-#include "matrix_lib\matrix.h"
+#include "matrix_lib\matrix.hpp"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */
@@ -60,12 +60,13 @@ Tensor::Tensor(int r, int c, int d, float v=0.0) {
 }
 
 Tensor::Tensor(const Tensor& that) {
+
     data = static_matrix_create(that.d, that.r, that.c);
 
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                data[k][i * 2 + j] = that.data[k][i * 2 + j];
+                data[k][i * c + j] = that.data[k][i * c + j];
             }
         }
     }
@@ -82,16 +83,14 @@ Tensor::~Tensor() {
 float Tensor::operator()(int i, int j, int k) const {
     float res{0.0};
 
-    if(i < d || i < d)
+    if(k < d || k < d)
         throw(index_out_of_bound());
-    else if (j < r || j < r)
+    else if (i < r || i < r)
         throw(index_out_of_bound());
-    else if (i < c || i < c)
+    else if (j < c || j < c)
         throw(index_out_of_bound());
-    else{
-        
+    else
         res = data[k][(i*c)+j];
-    }
 
     return res;
 }
@@ -110,19 +109,114 @@ float& Tensor::operator()(int i, int j, int k) {
 }
 
 Tensor Tensor::operator-(const Tensor &rhs)const {
-    return rhs;
+    if (c < rhs.c || c > rhs.c)
+        throw(index_out_of_bound());
+    else if (r < rhs.r || r > rhs.r)
+        throw(index_out_of_bound());
+    else if (d < rhs.d || d > rhs.d)
+        throw(index_out_of_bound());
+    
+    Tensor temp;
+
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) - (this->data[k][i * c + j]);
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor Tensor::operator +(const Tensor &rhs)const {
-    return rhs;
+    if (c < rhs.c || c > rhs.c)
+        throw(index_out_of_bound());
+    else if (r < rhs.r || r > rhs.r)
+        throw(index_out_of_bound());
+    else if (d < rhs.d || d > rhs.d)
+        throw(index_out_of_bound());
+
+    Tensor temp;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) + (this->data[k][i * c + j]);
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
-Tensor Tensor::operator*(const Tensor &rhs)const {
-    return rhs;
+Tensor Tensor::operator*(const Tensor &rhs)const
+{
+    if (c < rhs.c || c > rhs.c)
+        throw(index_out_of_bound());
+    else if (r < rhs.r || r > rhs.r)
+        throw(index_out_of_bound());
+    else if (d < rhs.d || d > rhs.d)
+        throw(index_out_of_bound());
+
+    Tensor temp;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) * (this->data[k][i * c + j]);
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
-Tensor Tensor::operator/(const Tensor &rhs)const {
-    return rhs;
+Tensor Tensor::operator/(const Tensor &rhs)const
+{
+    if (c < rhs.c || c > rhs.c)
+        throw(index_out_of_bound());
+    else if (r < rhs.r || r > rhs.r)
+        throw(index_out_of_bound());
+    else if (d < rhs.d || d > rhs.d)
+        throw(index_out_of_bound());
+
+    Tensor temp;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) / (this->data[k][i * c + j]);
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor Tensor::operator-(const float &rhs)const {
