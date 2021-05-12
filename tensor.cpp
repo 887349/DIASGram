@@ -319,8 +319,30 @@ Tensor Tensor::padding(int pad_h, int pad_w)const {
     return *this;
 }
 
+
 Tensor Tensor::subset(unsigned int row_start, unsigned int row_end, unsigned int col_start, unsigned int col_end, unsigned int depth_start, unsigned int depth_end)const {
-    return *this;
+    if (col_start<0 || col_start>col_end || col_start>c || col_end<0 || col_end>c)
+        throw(dimension_mismatch());
+    else if (row_start<0 || row_start>col_end || row_start>r || row_end<0 || row_end>r)
+        throw(dimension_mismatch());
+    else if (depth_start<0 || depth_start>col_end || depth_start>c || depth_end<0 || depth_end>c)
+        throw(dimension_mismatch());
+
+    Tensor temp(row_end, col_end, depth_end);
+
+    for (int k = depth_start; k < depth_end; k++){
+        for (int i = row_start; i < row_end; i++){
+            for (int j = col_start; j < col_end; j++){
+                temp.data[k][i * col_end + j] = this->data[k][i * c + j];
+            }
+        }
+    }
+
+    temp.d = depth_end;
+    temp.r = row_end;
+    temp.c = col_end;
+
+    return temp;
 }
 
 Tensor Tensor::concat(const Tensor &rhs, int axis=0)const {
