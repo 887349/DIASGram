@@ -52,7 +52,6 @@ void matrix_init(TYPE **&data, int d = 0, int r = 0, int c = 0, float v = 1.0)
     }
 }
 
-/* copy constructor test */
 TYPE **copy_constr(TYPE **&data1, float v, int d = 0, int r = 0, int c = 0)
 {
     TYPE **data;
@@ -72,7 +71,24 @@ TYPE **copy_constr(TYPE **&data1, float v, int d = 0, int r = 0, int c = 0)
 
     return data;
 }
-/**/
+
+void clamp(TYPE **&data, int d, int r, int c, float low, float high) {
+    float *temp;
+
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp = &data[k][i * c + j];
+                if(*temp < low)
+                    *temp = low;
+                else if(*temp > high)
+                    *temp = high;
+                else    
+                    continue;
+            }
+        }
+    }
+}
 
 /*main to test various functions*/
 int main() {
@@ -80,12 +96,10 @@ int main() {
 
     that = static_matrix_create(3, 2, 2);
     matrix_init(that, 3, 2, 2);
-    data = copy_constr(that, -2.7, 3, 2, 2);
 
     matrix_print(that, 3, 2, 2);
-    matrix_print(data, 3, 2, 2);
+    clamp(that, 3, 2, 2, 1.5, 5.5);    matrix_print(that, 3, 2, 2);
 
     matrix_del(that, 3);
-    matrix_del(data, 3);
     return 0;
 }
