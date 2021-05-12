@@ -220,11 +220,39 @@ Tensor Tensor::operator/(const Tensor &rhs)const
 }
 
 Tensor Tensor::operator-(const float &rhs)const {
-    return *this;
+    Tensor temp(r, c, d);
+
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp.data[k][i * c + j] - rhs;
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor Tensor::operator+(const float &rhs)const {
-    return *this;
+    Tensor temp(r, c, d);
+
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp.data[k][i * c + j] + rhs;
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor Tensor::operator*(const float &rhs)const {
@@ -250,7 +278,21 @@ Tensor Tensor::operator*(const float &rhs)const {
 }
 
 Tensor Tensor::operator/(const float &rhs)const {
-    return *this;
+    Tensor temp(r, c, d);
+
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp.data[k][i * c + j] / rhs;
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor &Tensor::operator=(const Tensor &other) {
@@ -423,6 +465,7 @@ friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj) {
 
  
 void Tensor::read_file(string filename) {
+    
 
 }
 
