@@ -257,12 +257,18 @@ Tensor & Tensor::operator=(const Tensor &other) {
     return *this;
 }
 
-void Tensor::init_random(float mean=0.0, float std=1.0) {
-
-}
-
 void Tensor::init(int r, int c, int d, float v=0.0) {
 
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                this->data[k][i * c + j] * v;
+            }
+        }
+    }
 }
 
 void Tensor::clamp(float low, float high) {
