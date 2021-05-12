@@ -2,6 +2,9 @@
 #include<cstdlib>
 #include "matrix.hpp"
 
+using namespace std;
+
+
 TYPE **static_matrix_create(int d = 0, int r = 0, int c = 0){
     TYPE **data;
     if (d!=0) {
@@ -90,16 +93,38 @@ void clamp(TYPE **&data, int d, int r, int c, float low, float high) {
     }
 }
 
+TYPE** padding(TYPE **&data, int d, int r, int c, int pad_h, int pad_w){
+    int n_r = (r+2*pad_h), n_c = (c+2*pad_w);
+    TYPE **temp = static_matrix_create(d, n_r, n_c);
+
+    cout << n_r << " - " << n_c << endl << endl;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = pad_h; i < (n_r-pad_h); i++)
+        {
+            for (int j = pad_w; j < (n_c-pad_w); j++)
+            {
+                temp[k][i * n_c + j] = data[k][(i-pad_h) * c + (j-pad_w)];
+            }
+        }
+    }
+
+    return temp;
+}
+
 /*main to test various functions*/
 int main() {
     float **that, **data;
 
-    that = static_matrix_create(3, 2, 2);
-    matrix_init(that, 3, 2, 2);
+    that = static_matrix_create(3, 3, 3);
+    matrix_init(that, 3, 3, 3, 5);
 
-    matrix_print(that, 3, 2, 2);
-    clamp(that, 3, 2, 2, 1.5, 5.5);    matrix_print(that, 3, 2, 2);
+    matrix_print(that, 3, 3, 3);
+    data = padding(that, 3, 3, 3, 2, 2);
+    matrix_print(data, 3, 7, 7);
 
     matrix_del(that, 3);
+    matrix_del(data, 3);
     return 0;
 }

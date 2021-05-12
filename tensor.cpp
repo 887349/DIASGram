@@ -369,7 +369,21 @@ void Tensor::rescale(float new_max=1.0) {
 }
 
 Tensor Tensor::padding(int pad_h, int pad_w)const {
-    return *this;
+    int n_r = (r+2*pad_h), n_c = (c+2*pad_w);
+    Tensor temp(n_r, n_c, d);
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = pad_h; i < (n_r-pad_h); i++)
+        {
+            for (int j = pad_w; j < (n_c-pad_w); j++)
+            {
+                temp.data[k][i * n_c + j] = data[k][(i-pad_h) * c + (j-pad_w)];
+            }
+        }
+    }
+
+    return temp;
 }
 
 
