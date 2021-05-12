@@ -110,12 +110,12 @@ float& Tensor::operator()(int i, int j, int k) {
 
 Tensor Tensor::operator-(const Tensor &rhs)const {
     if (c < rhs.c || c > rhs.c)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (r < rhs.r || r > rhs.r)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (d < rhs.d || d > rhs.d)
-        throw(index_out_of_bound());
-    
+        throw(dimension_mismatch());
+
     Tensor temp;
 
     for (int k = 0; k < d; k++){
@@ -135,11 +135,11 @@ Tensor Tensor::operator-(const Tensor &rhs)const {
 
 Tensor Tensor::operator +(const Tensor &rhs)const {
     if (c < rhs.c || c > rhs.c)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (r < rhs.r || r > rhs.r)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (d < rhs.d || d > rhs.d)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
 
     Tensor temp;
 
@@ -164,11 +164,11 @@ Tensor Tensor::operator +(const Tensor &rhs)const {
 Tensor Tensor::operator*(const Tensor &rhs)const
 {
     if (c < rhs.c || c > rhs.c)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (r < rhs.r || r > rhs.r)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (d < rhs.d || d > rhs.d)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
 
     Tensor temp;
 
@@ -193,11 +193,11 @@ Tensor Tensor::operator*(const Tensor &rhs)const
 Tensor Tensor::operator/(const Tensor &rhs)const
 {
     if (c < rhs.c || c > rhs.c)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (r < rhs.r || r > rhs.r)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
     else if (d < rhs.d || d > rhs.d)
-        throw(index_out_of_bound());
+        throw(dimension_mismatch());
 
     Tensor temp;
 
@@ -228,7 +228,25 @@ Tensor Tensor::operator+(const float &rhs)const {
 }
 
 Tensor Tensor::operator*(const float &rhs)const {
-    return *this;
+
+    Tensor temp;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                temp.data[k][i * c + j] * rhs;
+            }
+        }
+    }
+
+    temp.d = d;
+    temp.r = r;
+    temp.c = c;
+
+    return temp;
 }
 
 Tensor Tensor::operator/(const float &rhs)const {
