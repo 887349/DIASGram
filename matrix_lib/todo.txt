@@ -6,13 +6,10 @@ TO DO:
         Tensor Tensor::operator-(const float &rhs)const
         Tensor Tensor::operator+(const float &rhs)const
         Tensor Tensor::operator*(const float &rhs)const
-        Tensor Tensor::operator/(const float &rhs)const
+        Tensor Tensor::operator/(const float &rhs)costanti
+
         
-         
-    
-    M    void Tensor::clamp(float low, float high)
     M    Tensor Tensor::padding(int pad_h, int pad_w)const
-   
     M    Tensor Tensor::concat(const Tensor &rhs, int axis=0)const
     G    Tensor Tensor::convolve(const Tensor &f)const<
     G    void Tensor::read_file(string filename)
