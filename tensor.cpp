@@ -298,7 +298,21 @@ void Tensor::clamp(float low, float high) {
 }
 
 void Tensor::rescale(float new_max=1.0) {
-
+    for (int k = 0; k < d; k++)
+    {
+        float min = getMin(k);
+        float max = getMax(k);
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                this->data[k][i * c + j] = ((this->data[k][i * c + j] - min) / (max - min)) * new_max;
+                
+                if (this->data[k][i * c + j] < 0 || this->data[k][i * c + j] > new_max )
+                    throw(dimension_mismatch());
+            }
+        }
+    }
 }
 
 Tensor Tensor::padding(int pad_h, int pad_w)const {
