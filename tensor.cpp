@@ -6,7 +6,7 @@
 
 #include "dais_exc.h"
 #include "tensor.h"
-#include "matrix_lib\matrix.hpp"
+#include "matrix_lib/matrix.hpp"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */
@@ -254,6 +254,28 @@ Tensor Tensor::operator/(const float &rhs)const {
 }
 
 Tensor & Tensor::operator=(const Tensor &other) {
+    
+    if (c < other.c || c > other.c)
+        throw(dimension_mismatch());
+    else if (r < other.r || r > other.r)
+        throw(dimension_mismatch());
+    else if (d < other.d || d > other.d)
+        throw(dimension_mismatch());
+
+    
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (this->data[k][i * c + j] != (other.data[k][i * c + j]))
+                    this->data[k][i * c + j] = (other.data[k][i * c + j]);
+            }
+        }
+    }
+    
     return *this;
 }
 
