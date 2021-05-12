@@ -285,7 +285,7 @@ int Tensor::depth()const {
 }
     
 
-/* ADD THROW ERROR
+
 float Tensor::getMin(int k)const {
     float min = 0;
     if (k<d && k>=0) {
@@ -317,7 +317,7 @@ float Tensor::getMax(int k)const {
     }
     return max;
 }
-*/
+
 
 void Tensor::showSize()const {
     std::cout << r << " x " << c << " x " << d <<std::endl;
