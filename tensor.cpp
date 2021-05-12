@@ -255,14 +255,11 @@ Tensor Tensor::operator/(const float &rhs)const {
 
 Tensor & Tensor::operator=(const Tensor &other) {
     
-    if (c < other.c || c > other.c)
-        throw(dimension_mismatch());
-    else if (r < other.r || r > other.r)
-        throw(dimension_mismatch());
-    else if (d < other.d || d > other.d)
-        throw(dimension_mismatch());
-
-    
+    matrix_del(this->data, this->d);
+    this->data = static_matrix_create(other.d, other.r, other.c);
+    this-> d = other.d;
+    this-> r = other.r;
+    this-> c = other.c;
 
     for (int k = 0; k < d; k++)
     {

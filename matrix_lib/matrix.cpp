@@ -4,11 +4,14 @@
 
 TYPE **static_matrix_create(int d = 0, int r = 0, int c = 0){
     TYPE **data;
-    data = new TYPE*[d]{nullptr};
+    if (d!=0) {
+        data = new TYPE*[d]{nullptr};
 
-    for (int i = 0; i < d; i++)
-        data[i] = new TYPE[r*c];
-
+        for (int i = 0; i < d; i++)
+            data[i] = new TYPE[r*c];
+    } else {
+        data = new TYPE*[0];
+    }
     return data;
 }
 
@@ -34,7 +37,7 @@ void matrix_print(TYPE **&data, int d = 0, int r = 0, int c = 0){
     }
 }
 
-void matrix_init(TYPE **&data, int d = 0, int r = 0, int c = 0, float v = 1.0)
+void matrix_init(TYPE **&data, int d = 0, int r = 0, int c = 0, float v = 0.0)
 {
 
     for (int k = 0; k < d; k++)
@@ -43,10 +46,7 @@ void matrix_init(TYPE **&data, int d = 0, int r = 0, int c = 0, float v = 1.0)
         {
             for (int j = 0; j < c; j++)
             {   
-                if(v == 1.0)
-                    data[k][i * c + j] = rand()%10;
-                else
-                    data[k][i * c + j] = v;
+                data[k][i * c + j] = v;
             }
         }
     }
