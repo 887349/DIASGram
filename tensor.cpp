@@ -54,9 +54,9 @@ Tensor::Tensor(int r, int c, int d, float v=0.0) {
     data = static_matrix_create(d, r, c);
     matrix_init(data, v);
 
-    r = r; // number of rows
-    c = c; // number of columns
-    d = d; // tensor depth
+    this->r = r; // number of rows
+    this->c = c; // number of columns
+    this->d = d; // tensor depth
 }
 
 Tensor::Tensor(const Tensor& that) {
@@ -126,10 +126,6 @@ Tensor Tensor::operator-(const Tensor &rhs)const {
         }
     }
 
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
-
     return temp;
 }
 
@@ -153,10 +149,6 @@ Tensor Tensor::operator +(const Tensor &rhs)const {
             }
         }
     }
-
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
 
     return temp;
 }
@@ -183,10 +175,6 @@ Tensor Tensor::operator*(const Tensor &rhs)const
         }
     }
 
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
-
     return temp;
 }
 
@@ -212,10 +200,6 @@ Tensor Tensor::operator/(const Tensor &rhs)const
         }
     }
 
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
-
     return temp;
 }
 
@@ -230,10 +214,6 @@ Tensor Tensor::operator-(const float &rhs)const {
         }
     }
 
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
-
     return temp;
 }
 
@@ -247,10 +227,6 @@ Tensor Tensor::operator+(const float &rhs)const {
             }
         }
     }
-
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
 
     return temp;
 }
@@ -270,10 +246,6 @@ Tensor Tensor::operator*(const float &rhs)const {
         }
     }
 
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
-
     return temp;
 }
 
@@ -287,10 +259,6 @@ Tensor Tensor::operator/(const float &rhs)const {
             }
         }
     }
-
-    temp.d = d;
-    temp.r = r;
-    temp.c = c;
 
     return temp;
 }
