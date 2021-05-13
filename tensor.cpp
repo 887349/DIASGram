@@ -432,13 +432,13 @@ Tensor Tensor::convolve(const Tensor &f)const {
     Tensor new_conv_tensor(this->r, this->c, this->d);
 
     for (int k = 0; k < new_conv_tensor.d; k++) {
-        for (int i = 0; i <= new_conv_tensor.r; i++) {
-            for (int j = 0; j <= new_conv_tensor.c; j++) {
+        for (int i = 0; i < new_conv_tensor.r; i++) {
+            for (int j = 0; j < new_conv_tensor.c; j++) {
                 
                 float tot = 0;
                 for (int i_f=0; i_f<f.r; i++) {
                     for (int j_f=0; j_f<f.c; j++) {
-                        tot = tot + ( new_padd_tensor.data[k][i_f*f.c+j_f] * f.data[k][i_f*f.c+j_f] );
+                        tot = tot + ( new_padd_tensor.data[k][(i+i_f)*new_padd_tensor.c+(j+j_f)] * f.data[k][i_f*f.c+j_f] );
                     }
                 }
                 new_conv_tensor.data[k][i*new_conv_tensor.c+j]=tot;

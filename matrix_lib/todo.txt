@@ -10,6 +10,5 @@ TO DO:
         Tensor Tensor::operator/(const float &rhs)costanti
 
     M    Tensor Tensor::concat(const Tensor &rhs, int axis=0)const
-    G    Tensor Tensor::convolve(const Tensor &f)const<
-    G    void Tensor::read_file(string filename)
+    G/MAISHA    void Tensor::read_file(string filename)
     M    friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj)
