@@ -485,5 +485,26 @@ void Tensor::read_file(string filename) {
 
  
 void Tensor::write_file(string filename) {
-
+    fstream f;
+    f.open(filename, ios::out);
+    
+    int k, i, j;
+    if(f.is_open()){
+        f << d << "\n" << r << "\n" << c << "\n\n";
+        for (k = 0; k < d; k++)
+        {
+            f << "data(" << k << ",0,0)" << "\n";
+            for (i = 0; i < r; i++)
+            {
+                for (j = 0; j < c; j++)
+                {
+                    f << data[k][i * c + j] << " ";
+                }
+                f << "\n";
+            }
+            f << "\n";
+        }
+    }
+    else
+        throw(unable_to_write_file());
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include<cstdlib>
+#include <fstream>
 #include "matrix.hpp"
 
 using namespace std;
@@ -113,6 +114,28 @@ TYPE** padding(TYPE **&data, int d, int r, int c, int pad_h, int pad_w){
     return temp;
 }
 
+void write_file(string filename, TYPE **&data, int d, int r, int c) {
+    fstream f;
+    f.open(filename, ios::out);
+    int k, i, j;
+    if(f.is_open()){
+        f << d << "\n" << r << "\n" << c << "\n\n";
+        for (k = 0; k < d; k++)
+        {
+            f << "data(" << k << ",0,0)" << "\n";
+            for (i = 0; i < r; i++)
+            {
+                for (j = 0; j < c; j++)
+                {
+                    f << data[k][i * c + j] << " ";
+                }
+                f << "\n";
+            }
+            f << "\n";
+        }
+    }
+}
+
 /*main to test various functions*/
 int main() {
     float **that, **data;
@@ -123,6 +146,8 @@ int main() {
     matrix_print(that, 3, 3, 3);
     data = padding(that, 3, 3, 3, 2, 2);
     matrix_print(data, 3, 7, 7);
+
+    write_file("out.txt", data, 3, 7, 7);
 
     matrix_del(that, 3);
     matrix_del(data, 3);
