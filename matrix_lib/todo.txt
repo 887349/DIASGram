@@ -1,6 +1,7 @@
 TO DO:
 
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
+    !! TESTARE le funzioni prima di pusharle !! 
     
     MAISHA:
         Tensor Tensor::operator-(const float &rhs)const
@@ -8,10 +9,7 @@ TO DO:
         Tensor Tensor::operator*(const float &rhs)const
         Tensor Tensor::operator/(const float &rhs)costanti
 
-        
-    M    Tensor Tensor::padding(int pad_h, int pad_w)const
     M    Tensor Tensor::concat(const Tensor &rhs, int axis=0)const
     G    Tensor Tensor::convolve(const Tensor &f)const<
     G    void Tensor::read_file(string filename)
-    M    void Tensor::write_file(string filename)
     M    friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj)
