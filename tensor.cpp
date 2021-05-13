@@ -209,7 +209,7 @@ Tensor Tensor::operator-(const float &rhs)const {
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                temp.data[k][i * c + j] - rhs;
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) - rhs;
             }
         }
     }
@@ -223,7 +223,7 @@ Tensor Tensor::operator+(const float &rhs)const {
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                temp.data[k][i * c + j] + rhs;
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) + rhs;
             }
         }
     }
@@ -235,13 +235,10 @@ Tensor Tensor::operator*(const float &rhs)const {
 
     Tensor temp(r, c, d);
 
-    for (int k = 0; k < d; k++)
-    {
-        for (int i = 0; i < r; i++)
-        {
-            for (int j = 0; j < c; j++)
-            {
-                temp.data[k][i * c + j] * rhs;
+    for (int k = 0; k < d; k++){
+        for (int i = 0; i < r; i++){
+            for (int j = 0; j < c; j++){
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) * rhs;
             }
         }
     }
@@ -255,7 +252,7 @@ Tensor Tensor::operator/(const float &rhs)const {
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                temp.data[k][i * c + j] / rhs;
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) / rhs;
             }
         }
     }
