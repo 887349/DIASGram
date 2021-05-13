@@ -359,7 +359,10 @@ void Tensor::rescale(float new_max=1.0) {
         {
             for (int j = 0; j < c; j++)
             {
-                this->data[k][i * c + j] = ((this->data[k][i * c + j] - min) / (max - min)) * new_max;
+                if (max==min)
+                    this->data[k][i * c + j] = new_max;
+                else
+                    this->data[k][i * c + j] = ((this->data[k][i * c + j] - min) / (max - min)) * new_max;
                 
                 if (this->data[k][i * c + j] < 0 || this->data[k][i * c + j] > new_max )
                     throw(dimension_mismatch());
@@ -418,7 +421,37 @@ Tensor Tensor::concat(const Tensor &rhs, int axis=0)const {
 
 
 Tensor Tensor::convolve(const Tensor &f)const {
-    return f;
+    if (f.c % 2 == 0 || f.r % 2 == 0)
+        throw (filter_odd_dimensions());
+    if (f.d != this->d)
+        throw (concat_wrong_dimension());
+    
+    Tensor new_padd_tensor;
+    new_padd_tensor = this->padding( (f.r-1)/2 , (f.c-1)/2 );
+    
+    Tensor new_conv_tensor(this->r, this->c, this->d);
+
+    for (int k = 0; k < new_conv_tensor.d; k++) {
+        for (int i = 0; i <= new_conv_tensor.r; i++) {
+            for (int j = 0; j <= new_conv_tensor.c; j++) {
+                
+                float tot = 0;
+                for (int i_f=0; i_f<f.r; i++) {
+                    for (int j_f=0; j_f<f.c; j++) {
+                        tot = tot + ( new_padd_tensor.data[k][i_f*f.c+j_f] * f.data[k][i_f*f.c+j_f] );
+                    }
+                }
+                new_conv_tensor.data[k][i*new_conv_tensor.c+j]=tot;
+
+            }
+        }
+    }
+
+    new_conv_tensor.clamp(0,255);
+
+    new_conv_tensor.rescale();
+
+    return new_conv_tensor;
 }
 
 int Tensor::rows()const {
