@@ -309,8 +309,7 @@ Tensor &Tensor::operator=(const Tensor &other) {
         {
             for (int j = 0; j < c; j++)
             {
-                if (this->data[k][i * c + j] != (other.data[k][i * c + j]))
-                    this->data[k][i * c + j] = (other.data[k][i * c + j]);
+                this->data[k][i * c + j] = (other.data[k][i * c + j]);
             }
         }
     }
