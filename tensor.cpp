@@ -476,7 +476,28 @@ void Tensor::showSize()const {
 
  
 void Tensor::read_file(string filename) {
-    
+    ifstream f(filename);
+    int k, i, j;
+    if(f.is_open()) {
+        getline (f, r);
+        getline (f, c);
+        getline (f, d);
+
+        for (int k = 0; k < d; k++)
+        {
+            for (int i = 0; i < r; i++)
+            {
+                string q;
+                getline (f, q, "(");
+                for (int j = 0; j < c; j++)
+                {
+                    f >> data[k][i * c + j] >> q;
+                }
+            }
+        }
+    }    
+    else
+        throw(unable_to_read_file());
 
 }
 
