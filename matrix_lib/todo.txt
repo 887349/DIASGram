@@ -5,4 +5,4 @@ TO DO:
 
     Tensor::read_file() non legge l'ultima riga del read_file
 
-    
+    Tensor::rescale() ha un errore che inizializza tutti i primi valori a 0

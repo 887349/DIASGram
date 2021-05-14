@@ -902,9 +902,9 @@ Tensor Tensor::padding(int pad_h, int pad_w)const {
 Tensor Tensor::subset(unsigned int row_start, unsigned int row_end, unsigned int col_start, unsigned int col_end, unsigned int depth_start, unsigned int depth_end)const {
     if (col_start>col_end || col_start>unsigned(c)  || col_end>unsigned(c) )
         throw(dimension_mismatch());
-    else if (row_start>col_end || row_start>unsigned(r) || row_end>unsigned(r))
+    if (row_start>col_end || row_start>unsigned(r) || row_end>unsigned(r))
         throw(dimension_mismatch());
-    else if (depth_start>col_end || depth_start>unsigned(c) || depth_end>unsigned(c) )
+    if (depth_start>col_end || depth_start>unsigned(d) || depth_end>unsigned(d) )
         throw(dimension_mismatch());
 
     Tensor temp(row_end, col_end, depth_end);
@@ -1148,9 +1148,11 @@ void Tensor::write_file(string filename) {
 
 int main(){
 
-    Tensor a(3, 3, 3), b(3, 3, 3, 1);
+    Tensor a(10, 10, 3,1);
 
-    
+    cout << a;
+    Tensor b = a.subset(2, 8, 2, 3, 0, 4);
+    cout << b;
 
     return 0;
 }
