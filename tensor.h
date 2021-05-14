@@ -8,6 +8,7 @@
 #include <fstream>
 
 #include "dais_exc.h"
+#include "matrix_lib/matrix.hpp"
 
 #define PI 3.141592654
 #define FLT_MAX 3.402823466e+38F /* max value */

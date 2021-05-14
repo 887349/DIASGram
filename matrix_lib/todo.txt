@@ -2,13 +2,3 @@ TO DO:
 
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
     !! TESTARE le funzioni prima di pusharle !! 
-    
-    MAISHA:
-        Tensor Tensor::operator-(const float &rhs)const
-        Tensor Tensor::operator+(const float &rhs)const
-        Tensor Tensor::operator*(const float &rhs)const
-        Tensor Tensor::operator/(const float &rhs)costanti
-
-    M    Tensor Tensor::concat(const Tensor &rhs, int axis=0)const
-    G/MAISHA    void Tensor::read_file(string filename)
-    M    friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj)

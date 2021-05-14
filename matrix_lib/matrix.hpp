@@ -13,7 +13,7 @@ void matrix_init(TYPE **&data, float v);
 
 TYPE **copy_constr(TYPE **&data1, float v, int d, int r, int c);
 
-void write_file(string filename, TYPE **&data, int d, int r, int c);
+void write_file(std::string filename, TYPE **&data, int d, int r, int c);
 
 float getMax(TYPE **&data, int k, int r, int c, int d);
 

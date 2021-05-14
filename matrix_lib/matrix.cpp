@@ -94,7 +94,7 @@ void clamp(TYPE **&data, int d, int r, int c, float low, float high) {
     }
 }
 
-TYPE** padding(TYPE **&data, int d, int r, int c, int pad_h, int pad_w){
+TYPE **padding(TYPE **&data, int d, int r, int c, int pad_h, int pad_w){
     int n_r = (r+2*pad_h), n_c = (c+2*pad_w);
     TYPE **temp = static_matrix_create(d, n_r, n_c);
 
@@ -119,21 +119,18 @@ void write_file(string filename, TYPE **&data, int d, int r, int c) {
     f.open(filename, ios::out);
     int k, i, j;
     if(f.is_open()){
-        f << d << "\n" << r << "\n" << c << "\n\n";
-        for (k = 0; k < d; k++)
-        {
-            f << "data(" << k << ",0,0)" << "\n";
-            for (i = 0; i < r; i++)
-            {
-                for (j = 0; j < c; j++)
-                {
+        f << d << endl << r << endl << c << endl;
+        for (k = 0; k < d; k++){
+            for (i = 0; i < r; i++){
+                for (j = 0; j < c; j++){
                     f << data[k][i * c + j] << " ";
                 }
-                f << "\n";
+                f << endl;
             }
-            f << "\n";
         }
     }
+
+    f.close();
 }
 
 /*main to test various functions*/
@@ -141,15 +138,10 @@ int main() {
     float **that, **data;
 
     that = static_matrix_create(3, 3, 3);
-    matrix_init(that, 3, 3, 3, 5);
+    matrix_init(that, 3, 3, 3, 1);
 
-    matrix_print(that, 3, 3, 3);
-    data = padding(that, 3, 3, 3, 2, 2);
-    matrix_print(data, 3, 7, 7);
-
-    write_file("out.txt", data, 3, 7, 7);
+    write_file("out.txt", that, 3, 3, 3);
 
     matrix_del(that, 3);
-    matrix_del(data, 3);
     return 0;
 }

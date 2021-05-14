@@ -4,7 +4,6 @@
 #include <math.h>
 #include <fstream>
 
-#include "dais_exc.h"
 #include "tensor.h"
 #include "matrix_lib/matrix.hpp"
 
@@ -50,7 +49,7 @@ Tensor::Tensor(){
     d = 0; // tensor depth
 }
 
-Tensor::Tensor(int r, int c, int d, float v=0.0) {
+Tensor::Tensor(int r, int c, int d, float v) {
     data = static_matrix_create(d, r, c);
     matrix_init(data, v);
 
@@ -282,7 +281,7 @@ Tensor &Tensor::operator=(const Tensor &other) {
     return *this;
 }
 
-void Tensor::init(int r, int c, int d, float v=0.0) {
+void Tensor::init(int r, int c, int d, float v) {
 
     for (int k = 0; k < d; k++)
     {
@@ -314,7 +313,7 @@ void Tensor::clamp(float low, float high) {
     }
 }
 
-void Tensor::rescale(float new_max=1.0) {
+void Tensor::rescale(float new_max) {
     for (int k = 0; k < d; k++)
     {
         float min = getMin(k);
@@ -372,15 +371,66 @@ Tensor Tensor::subset(unsigned int row_start, unsigned int row_end, unsigned int
         }
     }
 
-    temp.d = depth_end;
-    temp.r = row_end;
-    temp.c = col_end;
-
     return temp;
 }
 
-Tensor Tensor::concat(const Tensor &rhs, int axis=0)const {
-    return *this;
+Tensor Tensor::concat(const Tensor &rhs, int axis)const {
+    if(axis == 0 && this->r!=rhs.r)
+        throw concat_wrong_dimension();
+
+    else if(axis == 1 && this->c!=rhs.c)
+        throw concat_wrong_dimension();
+
+    if(axis == 0){
+        int new_r = this->r + rhs.r;
+        Tensor temp(new_r, c, d);
+
+        for (int k = 0; k < d; k++)
+        {
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                     temp.data[k][i * c + j] = data[k][i * c + j];
+                }
+            }
+        }
+
+        for (int k = 0; k < d; k++)
+        {
+            for (int i = r; i < new_r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    int app_i=i-r;
+                    temp.data[k][i * c + j] = rhs.data[k][app_i * c + j];
+                }
+            }
+        }
+        return temp;
+
+    }
+    else if (axis==1) {
+        int new_c = this->c + rhs.c;
+        Tensor temp(r, new_c, d);
+        for (int k = 0; k < d; k++){
+            for (int i = 0; i < temp.r; i++){
+                for (int j = 0; j < temp.c; j++){
+                    if (j<this->c) 
+                        temp.data[k][i * temp.c + j] = this->data[k][i * this->c + j];
+                    else {
+                        int app_j = j-this->c;
+                        temp.data[k][i * temp.c + j] = rhs.data[k][i * rhs.c + app_j];
+                    }
+                }
+            }
+        }
+        return temp;
+    }
+    else {
+        Tensor temp;
+        return temp;
+    }
 }
 
 
@@ -470,28 +520,48 @@ void Tensor::showSize()const {
 }
     
 
-/*friend ostream& Tensor::operator<< (ostream& stream, const Tensor & obj) {
-    return *this;
-}*/
+ostream& operator<< (ostream& stream, const Tensor & obj){
+
+    int k, i, j;
+
+    stream << obj.d << "\n" << obj.r << "\n" << obj.c << "\n\n";
+    for (k = 0; k < obj.d; k++)
+    {
+        for (i = 0; i < obj.r; i++)
+        {
+            for (j = 0; j < obj.c; j++)
+            {
+                stream << obj.data[k][i * obj.c + j] << " ";
+            }
+            stream << "\n";
+        }
+        stream << "\n";
+    }
+
+    return stream;
+}
 
  
 void Tensor::read_file(string filename) {
-    ifstream f(filename);
+    ifstream f{filename};
     int k, i, j;
     if(f.is_open()) {
-        getline (f, r);
-        getline (f, c);
-        getline (f, d);
+        string q;
+        getline(f, q);
+        r = stoi(q);
+        getline(f, q);
+        c = stoi(q);
+        getline(f, q);
+        d = stoi(q);
 
         for (int k = 0; k < d; k++)
         {
             for (int i = 0; i < r; i++)
             {
-                string q;
-                getline (f, q, "(");
+                getline(f, q);
                 for (int j = 0; j < c; j++)
                 {
-                    f >> data[k][i * c + j] >> q;
+                    f >> data[k][i * c + j];
                 }
             }
         }
@@ -499,6 +569,7 @@ void Tensor::read_file(string filename) {
     else
         throw(unable_to_read_file());
 
+    f.close();
 }
 
  
@@ -508,10 +579,9 @@ void Tensor::write_file(string filename) {
 
     int k, i, j;
     if(f.is_open()){
-        f << d << "\n" << r << "\n" << c << "\n\n";
+        f << d << "\n" << r << "\n" << c << "\n";
         for (k = 0; k < d; k++)
         {
-            f << "data(" << k << ",0,0)" << "\n";
             for (i = 0; i < r; i++)
             {
                 for (j = 0; j < c; j++)
@@ -525,4 +595,6 @@ void Tensor::write_file(string filename) {
     }
     else
         throw(unable_to_write_file());
+
+    f.close();
 }
