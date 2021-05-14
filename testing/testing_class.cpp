@@ -638,7 +638,6 @@ float Tensor::operator()(int i, int j, int k) const {
 }
 
 float& Tensor::operator()(int i, int j, int k) {
-    float *res;
 
     if (k < 0 || k > d)
         throw(index_out_of_bound());
@@ -832,7 +831,7 @@ void Tensor::init(int r, int c, int d, float v) {
         {
             for (int j = 0; j < c; j++)
             {
-                data[k][i * c + j] * v;
+                data[k][i * c + j] = v;
             }
         }
     }
@@ -897,18 +896,18 @@ Tensor Tensor::padding(int pad_h, int pad_w)const {
 
 
 Tensor Tensor::subset(unsigned int row_start, unsigned int row_end, unsigned int col_start, unsigned int col_end, unsigned int depth_start, unsigned int depth_end)const {
-    if (col_start<0 || col_start>col_end || col_start>c || col_end<0 || col_end>c)
+    if (col_start>col_end || col_start>unsigned(c)  || col_end>unsigned(c) )
         throw(dimension_mismatch());
-    else if (row_start<0 || row_start>col_end || row_start>r || row_end<0 || row_end>r)
+    else if (row_start>col_end || row_start>unsigned(r) || row_end>unsigned(r))
         throw(dimension_mismatch());
-    else if (depth_start<0 || depth_start>col_end || depth_start>c || depth_end<0 || depth_end>c)
+    else if (depth_start>col_end || depth_start>unsigned(c) || depth_end>unsigned(c) )
         throw(dimension_mismatch());
 
     Tensor temp(row_end, col_end, depth_end);
 
-    for (int k = depth_start; k < depth_end; k++){
-        for (int i = row_start; i < row_end; i++){
-            for (int j = col_start; j < col_end; j++){
+    for (unsigned int k = depth_start; k < depth_end; k++){
+        for (unsigned int i = row_start; i < row_end; i++){
+            for (unsigned int j = col_start; j < col_end; j++){
                 temp.data[k][i * col_end + j] = this->data[k][i * c + j];
             }
         }
@@ -1087,7 +1086,6 @@ ostream& operator<< (ostream& stream, const Tensor & obj){
  
 void Tensor::read_file(string filename) {
     ifstream f{filename};
-    int k, i, j;
     if(f.is_open()) {
         string q;
         getline(f, q);
