@@ -61,18 +61,22 @@ Tensor::Tensor(int r, int c, int d, float v) {
 Tensor::Tensor(const Tensor& that) {
 
     data = static_matrix_create(that.d, that.r, that.c);
-
-    for (int k = 0; k < d; k++){
-        for (int i = 0; i < r; i++){
-            for (int j = 0; j < c; j++){
-                data[k][i * c + j] = that.data[k][i * c + j];
-            }
-        }
-    }
+    /* *this = that; */
 
     r = that.r;
     c = that.c;
     d = that.d;
+
+    for (int k = 0; k < d; k++)
+    {
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                this->data[k][i * c + j] = (that.data[k][i * c + j]);
+            }
+        }
+    }   
 }
 
 Tensor::~Tensor() {
@@ -587,3 +591,4 @@ void Tensor::write_file(string filename) {
         throw(unable_to_write_file());
 
     f.close();
+}
