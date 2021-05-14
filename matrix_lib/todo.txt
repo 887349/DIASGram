@@ -2,3 +2,7 @@ TO DO:
 
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
     !! TESTARE le funzioni prima di pusharle !! 
+
+    Tensor::read_file() non legge l'ultima riga del read_file
+
+    

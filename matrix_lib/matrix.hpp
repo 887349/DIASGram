@@ -9,7 +9,7 @@ void matrix_del(TYPE **&data, int d);
 
 void matrixc_print(TYPE **&data, int d, int r, int c);
 
-void matrix_init(TYPE **&data, float v);
+void matrix_init(TYPE **&data, int d, int r, int c, float v);
 
 TYPE **copy_constr(TYPE **&data1, float v, int d, int r, int c);
 

@@ -51,7 +51,7 @@ Tensor::Tensor(){
 
 Tensor::Tensor(int r, int c, int d, float v) {
     data = static_matrix_create(d, r, c);
-    matrix_init(data, v);
+    matrix_init(data, d, r, c, v);
 
     this->r = r; // number of rows
     this->c = c; // number of columns
@@ -97,11 +97,11 @@ float Tensor::operator()(int i, int j, int k) const {
 float& Tensor::operator()(int i, int j, int k) {
     float *res;
 
-    if (i < d || i < d)
+    if (k < 0 || k > d)
         throw(index_out_of_bound());
-    else if (j < r || j < r)
+    else if (i < 0 || i > r)
         throw(index_out_of_bound());
-    else if (i < c || i < c)
+    else if (j < 0 || j > c)
         throw(index_out_of_bound());
     else
         return data[k][(i * c) + j];
