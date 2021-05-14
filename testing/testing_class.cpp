@@ -666,7 +666,7 @@ Tensor Tensor::operator-(const Tensor &rhs)const {
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) - (this->data[k][i * c + j]);
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) - (rhs.data[k][i * c + j]);
             }
         }
     }
@@ -1148,9 +1148,9 @@ void Tensor::write_file(string filename) {
 
 int main(){
 
-    Tensor a(3, 3, 3, 5);
-    Tensor b(a);
-    cout << a << b;
+    Tensor a(3, 3, 3), b(3, 3, 3, 1);
+
+    
 
     return 0;
 }

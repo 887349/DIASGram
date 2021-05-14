@@ -123,7 +123,7 @@ Tensor Tensor::operator-(const Tensor &rhs)const {
     for (int k = 0; k < d; k++){
         for (int i = 0; i < r; i++){
             for (int j = 0; j < c; j++){
-                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) - (this->data[k][i * c + j]);
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) - (rhs.data[k][i * c + j]);
             }
         }
     }
@@ -197,7 +197,7 @@ Tensor Tensor::operator/(const Tensor &rhs)const
         {
             for (int j = 0; j < c; j++)
             {
-                temp.data[k][i * c + j] = (rhs.data[k][i * c + j]) / (this->data[k][i * c + j]);
+                temp.data[k][i * c + j] = (this->data[k][i * c + j]) / (rhs.data[k][i * c + j]);
             }
         }
     }
