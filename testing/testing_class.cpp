@@ -1151,7 +1151,11 @@ int main(){
     Tensor a(10, 10, 3,1);
 
     cout << a;
-    Tensor b = a.subset(2, 8, 2, 3, 0, 4);
+    a.write_file("out.txt");
+
+    Tensor b;
+    b.read_file("out.txt");
+
     cout << b;
 
     return 0;
