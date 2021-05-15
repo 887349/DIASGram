@@ -1099,13 +1099,13 @@ void Tensor::read_file(string filename) {
         getline(f, q);
         d = stoi(q);
 
-        data = static_matrix_create(d, r, c);
+        matrix_del(data, d);
+        data = static_matrix_create ( d, r, c);
 
         for (int k = 0; k < d; k++)
         {
             for (int i = 0; i < r; i++)
             {
-                getline(f, q);
                 for (int j = 0; j < c; j++)
                 {
                     f >> data[k][i * c + j];

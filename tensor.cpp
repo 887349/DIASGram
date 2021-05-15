@@ -547,7 +547,8 @@ void Tensor::read_file(string filename) {
         c = stoi(q);
         getline(f, q);
         d = stoi(q);
-
+        
+        matrix_del(data, d);
         data = static_matrix_create ( d, r, c);
 
         for (int k = 0; k < d; k++)
