@@ -554,7 +554,6 @@ void Tensor::read_file(string filename) {
         {
             for (int i = 0; i < r; i++)
             {
-                getline(f, q);
                 for (int j = 0; j < c; j++)
                 {
                     f >> data[k][i * c + j];
