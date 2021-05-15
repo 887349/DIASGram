@@ -548,6 +548,8 @@ void Tensor::read_file(string filename) {
         getline(f, q);
         d = stoi(q);
 
+        data = static_matrix_create ( d, r, c);
+
         for (int k = 0; k < d; k++)
         {
             for (int i = 0; i < r; i++)
@@ -572,7 +574,7 @@ void Tensor::write_file(string filename) {
 
     int k, i, j;
     if(f.is_open()){
-        f << d << "\n" << r << "\n" << c << "\n";
+        f << r << "\n" << c << "\n" << d << "\n";
         for (k = 0; k < d; k++)
         {
             for (i = 0; i < r; i++)
