@@ -379,7 +379,7 @@ Tensor Tensor::concat(const Tensor &rhs, int axis)const {
     if(axis == 0 && this->r!=rhs.r)
         throw concat_wrong_dimension();
 
-    else if(axis == 1 && this->c!=rhs.c)
+    if(axis == 1 && this->c!=rhs.c)
         throw concat_wrong_dimension();
 
     if(axis == 0){

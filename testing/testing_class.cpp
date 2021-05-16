@@ -921,10 +921,10 @@ Tensor Tensor::subset(unsigned int row_start, unsigned int row_end, unsigned int
 }
 
 Tensor Tensor::concat(const Tensor &rhs, int axis)const {
-    if(axis == 0 && this->r!=rhs.r)
+    if(axis == 0 && this->r != rhs.r)
         throw concat_wrong_dimension();
 
-    else if(axis == 1 && this->c!=rhs.c)
+    if(axis == 1 && this->c != rhs.c)
         throw concat_wrong_dimension();
 
     if(axis == 0){
@@ -1150,15 +1150,17 @@ void Tensor::write_file(string filename) {
 
 int main(){
 
-    Tensor a(10, 10, 3,1);
+    Tensor a(3, 3, 1, 1.0), b(3, 3, 1, 2.0), c(3, 3, 1, 3.0), d(3, 3, 1, 4.0);
+    Tensor f(3,3,1, 0);
+    Tensor w(3, 3, 1, 0);
+    w = a.concat(b, 1);
+    w = w.concat((c.concat(d, 1)), 0);
+    w = w.convolve(f);
+    
 
-    cout << a;
-    a.write_file("out.txt");
+    
 
-    Tensor b;
-    b.read_file("out.txt");
-
-    cout << b;
+    cout << w;
 
     return 0;
 }
