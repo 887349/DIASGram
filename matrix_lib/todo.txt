@@ -1,8 +1,34 @@
-TO DO:
+TO DO TENSOR:
 
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
-    !! TESTARE le funzioni prima di pusharle !! 
+    !! TESTARE le funzioni prima di pusharle !!
 
-    Tensor::read_file() non legge l'ultima riga del read_file
+    G   Tensor::rescale() ha un errore che inizializza tutti i primi valori a 0
 
-    Tensor::rescale() ha un errore che inizializza tutti i primi valori a 0
+TO DO DAISGram:
+
+    int DAISGram::getRows()
+
+    int DAISGram::getCols()
+
+    int DAISGram::getDepth()
+
+    DAISGram DAISGram::brighten(float bright)
+
+    DAISGram DAISGram::grayscale()
+
+    DAISGram DAISGram::warhol()
+
+    DAISGram DAISGram::sharpen()
+
+    DAISGram DAISGram::emboss()
+
+    DAISGram DAISGram::smooth(int h=3)
+
+    DAISGram DAISGram::edge()
+
+    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
+
+    DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[])
+
+    DAISGram DAISGram::equalize()

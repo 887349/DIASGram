@@ -8,6 +8,14 @@
 
 using namespace std;
 
+DAISGram::DAISGram(){
+
+}
+
+DAISGram::~DAISGram(){
+
+}
+
 /**
  * Load a bitmap from file
  *
@@ -73,4 +81,56 @@ void DAISGram::generate_random(int h, int w, int d){
     data = Tensor(h,w,d,0.0);
     data.init_random(128,50);
     data.rescale(255);
+}
+
+int DAISGram::getRows(){
+
+}
+
+int DAISGram::getCols(){
+
+}
+
+int DAISGram::getDepth(){
+
+}
+
+DAISGram DAISGram::brighten(float bright){
+
+}
+
+DAISGram DAISGram::grayscale(){
+
+}
+
+DAISGram DAISGram::warhol(){
+
+}
+
+DAISGram DAISGram::sharpen(){
+
+}
+
+DAISGram DAISGram::emboss(){
+
+}
+
+DAISGram DAISGram::smooth(int h=3){
+
+}
+
+DAISGram DAISGram::edge(){
+
+}
+
+DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5){
+
+}
+
+DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[]){
+
+}
+
+DAISGram DAISGram::equalize(){
+
 }
