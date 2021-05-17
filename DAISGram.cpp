@@ -141,7 +141,19 @@ DAISGram DAISGram::sharpen(){
 }
 
 DAISGram DAISGram::emboss(){
+    Tensor filter(3,3,0);
+    filter(0,0,0) = -2;
+    filter(0,1,0) = filter(1,0,0) = -1;
+    filter(2,0,0) = filter(0,2,0) = 0;
+    filter(1,1,0) = filter(2,1,0) = filter(0,2,0) = 1;
+    filter(2,2,0) = 2;
 
+    DAISGram res;
+    res.data = this->data.convolve(filter);
+    
+    res.data.clamp(0, 255);
+    
+    return res;
 }
 
 DAISGram DAISGram::smooth(int h=3){
