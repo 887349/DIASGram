@@ -3,8 +3,7 @@
 #include <random>
 #include <math.h>
 #include <fstream>
-
-#include "../dais_exc.h"
+#include "../dais_exc.h"n
 
 #define TYPE float
 
@@ -862,8 +861,8 @@ void Tensor::clamp(float low, float high) {
 void Tensor::rescale(float new_max) {
     for (int k = 0; k < d; k++)
     {
-        float min = getMin(k);
-        float max = getMax(k);
+        float min = this->getMin(k);
+        float max = this->getMax(k);
         for (int i = 0; i < r; i++)
         {
             for (int j = 0; j < c; j++)
@@ -1031,11 +1030,11 @@ int Tensor::depth()const {
 float Tensor::getMin(int k)const {
     float min = 0;
     if (k<d && k>=0) {
-        min = data[k][0];
+        min = this->data[k][0];
         for (int i=0; i<r; i++) {
             for (int j=0; j<c; j++) {
-                if (data[k][i*c+j] < min)
-                    min = data[k][i*c+j];
+                if (this->data[k][i*c+j] < min)
+                    min = this->data[k][i*c+j];
             }
         }
     } else {
@@ -1045,13 +1044,16 @@ float Tensor::getMin(int k)const {
 }
 
 float Tensor::getMax(int k)const {
-    float max = 0;
+    float max;
     if (k<d && k>=0) {
-        max = data[k][0];
+        max = this->data[k][0];
+
         for (int i=0; i<r; i++) {
+
             for (int j=0; j<c; j++) {
-                if (data[k][i*c+j] > max)
-                    max = data[k][i*c+j];
+
+                if (this->data[k][i*c+j] > max)
+                    max = this->data[k][i*c+j];
             }
         }
     } else {
@@ -1150,17 +1152,15 @@ void Tensor::write_file(string filename) {
 
 int main(){
 
-    Tensor a(3, 3, 1, 1.0), b(3, 3, 1, 2.0), c(3, 3, 1, 3.0), d(3, 3, 1, 4.0);
-    Tensor f(3,3,1, 0);
-    Tensor w(3, 3, 1, 0);
-    w = a.concat(b, 1);
-    w = w.concat((c.concat(d, 1)), 0);
-    w = w.convolve(f);
+    Tensor a(5, 5, 3);
     
+    a.init_random();
+    cout << a << endl;
+    a.rescale(2);
+    cout << a << endl;
 
-    
-
-    cout << w;
+    cout << "min:" << (a.getMin(1)) << endl;
+    cout << "max:" << (a.getMax(1)) << endl;
 
     return 0;
 }

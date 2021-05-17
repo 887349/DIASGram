@@ -83,8 +83,7 @@ class DAISGram{
 
         /**
          * Create a Warhol effect on the image
-         * 
-         * This function returns a composition of 4 different images in which the:
+         *          * This function returns a composition of 4 different images in which the:
          * - top left is the original image
          * - top right is the original image in which the Red and Green channel are swapped
          * - bottom left is the original image in which the Blue and Green channel are swapped
