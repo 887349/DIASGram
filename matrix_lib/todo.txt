@@ -9,13 +9,13 @@ TO DO DAISGram:
 
     Mi    DAISGram DAISGram::warhol()
 
-    G    DAISGram DAISGram::sharpen()
+V    G    DAISGram DAISGram::sharpen()
 
     Ma    DAISGram DAISGram::emboss()
 
     Mi    DAISGram DAISGram::smooth(int h=3)
 
-    G    DAISGram DAISGram::edge()
+V    G    DAISGram DAISGram::edge()
 
     Ma    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
 

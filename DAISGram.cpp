@@ -126,7 +126,18 @@ DAISGram DAISGram::warhol(){
 }
 
 DAISGram DAISGram::sharpen(){
+    
+    Tensor filter(3,3,1);
+    filter(0,0,1)=filter(0,2,1)=filter(2,0,1)=filter(2,2,1)=0;
+    filter(0,1,1)=filter(1,0,1)=filter(1,2,1)=filter(2,1,1)=-1;
+    filter(1,1,1)=5;
 
+    DAISGram res;
+    res.data = this->data.convolve(filter);
+    
+    res.data.clamp(0, 255); //NON DOVREBBE SERVIRE PERCHE VIENE GIA EFFETTUATO IN CONVOLVE
+    
+    return res;
 }
 
 DAISGram DAISGram::emboss(){
@@ -138,7 +149,16 @@ DAISGram DAISGram::smooth(int h=3){
 }
 
 DAISGram DAISGram::edge(){
+    Tensor filter(3,3,1);
+    filter(0,0,1)=filter(0,1,1)=filter(0,2,1)=filter(1,0,1)=filter(1,2,1)=filter(2,0,1)=filter(2,1,1)=filter(2,2,1)=-1;
+    filter(1,1,1)=8;
 
+    DAISGram res = this->grayscale();
+    res.data = res.data.convolve(filter);
+    
+    res.data.clamp(0, 255); //NON DOVREBBE SERVIRE PERCHE VIENE GIA EFFETTUATO IN CONVOLVE
+    
+    return res;
 }
 
 DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5){
