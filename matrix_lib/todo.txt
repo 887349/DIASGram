@@ -3,32 +3,24 @@ TO DO TENSOR:
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
     !! TESTARE le funzioni prima di pusharle !!
 
-    G   Tensor::rescale() ha un errore che inizializza tutti i primi valori a 0
+    Tensor::rescale ha i "this->" ch potrebbero essere ridondanti
 
 TO DO DAISGram:
 
-    int DAISGram::getRows()
+    Mi    DAISGram DAISGram::warhol()
 
-    int DAISGram::getCols()
+    G    DAISGram DAISGram::sharpen()
 
-    int DAISGram::getDepth()
+    Ma    DAISGram DAISGram::emboss()
 
-    DAISGram DAISGram::brighten(float bright)
+    Mi    DAISGram DAISGram::smooth(int h=3)
 
-    DAISGram DAISGram::grayscale()
+    G    DAISGram DAISGram::edge()
 
-    DAISGram DAISGram::warhol()
+    Ma    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
 
-    DAISGram DAISGram::sharpen()
+    OPZIONALI:
 
-    DAISGram DAISGram::emboss()
+        DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[])
 
-    DAISGram DAISGram::smooth(int h=3)
-
-    DAISGram DAISGram::edge()
-
-    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
-
-    DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[])
-
-    DAISGram DAISGram::equalize()
+        DAISGram DAISGram::equalize()
