@@ -122,7 +122,19 @@ DAISGram DAISGram::grayscale(){
 }
 
 DAISGram DAISGram::warhol(){
+    DAISGram res;
+    Tensor tdx, bsx, bdx; 
+    tdx = data;
+    bsx = data;
+    bdx = data;
 
+    tdx.swap_channel(0, 1);
+    bsx.swap_channel(2, 1);
+    bdx.swap_channel(0, 2);
+
+    res.data = (data.concat(tdx, 1)).concat((bsx.concat(bdx, 1)), 0);
+
+    return res;
 }
 
 DAISGram DAISGram::sharpen(){
