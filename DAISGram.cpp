@@ -8,6 +8,14 @@
 
 using namespace std;
 
+DAISGram::DAISGram(){
+
+}
+
+DAISGram::~DAISGram(){
+    
+}
+
 /**
  * Load a bitmap from file
  *

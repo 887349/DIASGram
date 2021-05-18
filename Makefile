@@ -6,7 +6,10 @@ all: testbmp main main_tensor
 debug: FLAGS=-g
 debug: main
 
-tensor.o: tensor.cpp
+matrix.o: matrix.cpp
+	g++ matrix.cpp -o matrix.o -c $(FLAGS)
+
+tensor.o: tensor.cpp matrix.o
 	g++ tensor.cpp -o tensor.o -c $(FLAGS)
 
 libbmp.o: libbmp.cpp
@@ -16,7 +19,7 @@ DAISGram.o: DAISGram.cpp libbmp.o
 	g++ DAISGram.cpp -o DAISGram.o -c $(FLAGS)
 
 main: tensor.o DAISGram.o libbmp.o main.cpp 
-	g++ libbmp.o tensor.o DAISGram.o main.cpp -o $(MAIN) $(FLAGS)
+	g++ libbmp.o tensor.o  DAISGram.o main.cpp -o $(MAIN) $(FLAGS)
 
 testbmp: test_bmplib.cpp libbmp.o
 	g++ libbmp.o test_bmplib.cpp -o test_bmplib $(FLAGS)
