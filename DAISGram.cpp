@@ -176,7 +176,6 @@ DAISGram DAISGram::emboss(){
         filter(2,2,k) = 2;
     }
     
-    
     DAISGram res;
     res.data = this->data.convolve(filter);
     
@@ -202,8 +201,6 @@ DAISGram DAISGram::smooth(int h){
 DAISGram DAISGram::edge(){
     
     Tensor filter(3, 3, this->data.depth(), -1);
-   
-    
     
     for(int k=1; k<filter.depth(); k++) {
         filter(1,1,k)=8;
@@ -221,7 +218,15 @@ DAISGram DAISGram::edge(){
 
 
 DAISGram DAISGram::blend(const DAISGram & rhs, float alpha){
-    return *this;
+
+    if (this->getRows()!=rhs->getRows() or this->getRows()!=rhs->getRows())
+        throw(dimension_mismatch);
+
+    DAISGram res;
+
+    res.data = alpha*this.data + (1-alpha)*rhs.data;
+    // Non sono sicura se basti cosi o se serva un ciclo
+    return res;
 }
 
 
