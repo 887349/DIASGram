@@ -9,6 +9,8 @@ TO DO DAISGram:
 
     Ma    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
 
+    CONVOLVE NON FUNZIONAAAAAA
+
     OPZIONALI:
 
         DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[])
