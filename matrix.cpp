@@ -1,6 +1,6 @@
 #include <iostream>
 #include<cstdlib>
-#incluude <fstream>
+#include <fstream>
 #include "matrix.h"
 
 using namespace std;
