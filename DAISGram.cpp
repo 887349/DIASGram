@@ -98,7 +98,7 @@ int DAISGram::getDepth(){
 DAISGram DAISGram::brighten(float bright){
     DAISGram res;
     res.data = data;
-    res.data + bright;
+    res.data = res.data + bright;
     res.data.clamp(0, 255);
 
     return res;
@@ -147,10 +147,13 @@ DAISGram DAISGram::warhol(){
 
 DAISGram DAISGram::sharpen(){
     
-    Tensor filter(3,3,1);
-    filter(0,0,1)=filter(0,2,1)=filter(2,0,1)=filter(2,2,1)=0;
-    filter(0,1,1)=filter(1,0,1)=filter(1,2,1)=filter(2,1,1)=-1;
-    filter(1,1,1)=5;
+    Tensor filter(3,3,this->data.depth());
+    
+    for(int k=0; k<filter.depth(); k++) {
+        filter(0,0,k)=filter(0,2,k)=filter(2,0,k)=filter(2,2,k)=0;
+        filter(0,1,k)=filter(1,0,k)=filter(1,2,k)=filter(2,1,k)=-1;
+        filter(1,1,k)=5;
+    }
 
     DAISGram res;
     res.data = this->data.convolve(filter);
@@ -161,13 +164,18 @@ DAISGram DAISGram::sharpen(){
 }
 
 DAISGram DAISGram::emboss(){
-    Tensor filter(3,3,0);
-    filter(0,0,0) = -2;
-    filter(0,1,0) = filter(1,0,0) = -1;
-    filter(2,0,0) = filter(0,2,0) = 0;
-    filter(1,1,0) = filter(2,1,0) = filter(0,2,0) = 1;
-    filter(2,2,0) = 2;
+    Tensor filter(3,3,this->data.depth());
 
+    for(int k=0; k<filter.depth(); k++) {
+        
+        filter(0,0,k) = -2;
+        filter(0,1,k) = filter(1,0,k) = -1;
+        filter(2,0,k) = filter(0,2,k) = 0;
+        filter(1,1,k) = filter(2,1,k) = filter(0,2,k) = 1;
+        filter(2,2,k) = 2;
+    }
+    
+    
     DAISGram res;
     res.data = this->data.convolve(filter);
     
@@ -181,7 +189,7 @@ DAISGram DAISGram::smooth(int h){
     if(h <= 0)
         throw(index_out_of_bound());
 
-    Tensor filter(h, h, data.depth(), 1/(h*h));
+    Tensor filter(h, h, this->data.depth(), 1/(h*h));
 
     res.data = this->data.convolve(filter);
 
@@ -189,13 +197,20 @@ DAISGram DAISGram::smooth(int h){
 }
 
 DAISGram DAISGram::edge(){
-    Tensor filter(3,3,1);
-    filter(0,0,1)=filter(0,1,1)=filter(0,2,1)=filter(1,0,1)=filter(1,2,1)=filter(2,0,1)=filter(2,1,1)=filter(2,2,1)=-1;
-    filter(1,1,1)=8;
+    
+    Tensor filter(3, 3, this->data.depth(), -1);
+   
+    
+    
+    for(int k=1; k<filter.depth(); k++) {
+        filter(1,1,k)=8;
+    }
 
     DAISGram res = this->grayscale();
+
+
     res.data = res.data.convolve(filter);
-    
+
     res.data.clamp(0, 255); //NON DOVREBBE SERVIRE PERCHE VIENE GIA EFFETTUATO IN CONVOLVE
     
     return res;
