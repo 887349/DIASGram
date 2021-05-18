@@ -132,16 +132,3 @@ void write_file(string filename, TYPE **&data, int d, int r, int c) {
 
     f.close();
 }
-
-/*main to test various functions*/
-int main() {
-    float **that, **data;
-
-    that = static_matrix_create(3, 3, 3);
-    matrix_init(that, 3, 3, 3, 1);
-
-    write_file("out.txt", that, 3, 3, 3);
-
-    matrix_del(that, 3);
-    return 0;
-}
