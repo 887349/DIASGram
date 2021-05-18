@@ -178,6 +178,9 @@ DAISGram DAISGram::emboss(){
 
 DAISGram DAISGram::smooth(int h){
     DAISGram res;
+    if(h <= 0)
+        throw(index_out_of_bound());
+
     Tensor filter(h, h, data.depth(), 1/(h*h));
 
     res.data = this->data.convolve(filter);

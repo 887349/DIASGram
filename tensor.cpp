@@ -442,16 +442,20 @@ Tensor Tensor::convolve(const Tensor &f)const {
     
     Tensor new_padd_tensor;
     new_padd_tensor = this->padding( (f.r-1)/2 , (f.c-1)/2 );
-    
-    Tensor new_conv_tensor(this->r, this->c, this->d);
 
+    cout<<"1"<<" "<<endl;
+
+    Tensor new_conv_tensor(this->r, this->c, this->d);
+cout<<"2"<<endl;
     for (int k = 0; k < new_conv_tensor.d; k++) {
         for (int i = 0; i < new_conv_tensor.r; i++) {
             for (int j = 0; j < new_conv_tensor.c; j++) {
+                cout<<"3"<<j<<endl;
                 
                 float tot = 0;
                 for (int i_f=0; i_f<f.r; i++) {
                     for (int j_f=0; j_f<f.c; j++) {
+                        cout<<"5"<<endl;
                         tot = tot + ( new_padd_tensor.data[k][(i+i_f)*new_padd_tensor.c+(j+j_f)] * f.data[k][i_f*f.c+j_f] );
                     }
                 }
@@ -460,7 +464,7 @@ Tensor Tensor::convolve(const Tensor &f)const {
             }
         }
     }
-
+cout<<"4"<<endl;
     new_conv_tensor.clamp(0,255);
 
     new_conv_tensor.rescale();
