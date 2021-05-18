@@ -147,16 +147,17 @@ DAISGram DAISGram::warhol(){
 
 DAISGram DAISGram::sharpen(){
     
-    Tensor filter(3,3,this->data.depth());
+    Tensor filter(3,3,data.depth());
     
     for(int k=0; k<filter.depth(); k++) {
+
         filter(0,0,k)=filter(0,2,k)=filter(2,0,k)=filter(2,2,k)=0;
         filter(0,1,k)=filter(1,0,k)=filter(1,2,k)=filter(2,1,k)=-1;
         filter(1,1,k)=5;
     }
 
     DAISGram res;
-    res.data = this->data.convolve(filter);
+    res.data = data.convolve(filter);
     
     res.data.clamp(0, 255); //NON DOVREBBE SERVIRE PERCHE VIENE GIA EFFETTUATO IN CONVOLVE
     

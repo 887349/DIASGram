@@ -9,7 +9,9 @@ TO DO DAISGram:
 
     Ma    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
 
-    CONVOLVE NON FUNZIONAAAAAA
+    sahrp, emboss, edge non funzionano con rescale attivato in convolve()
+
+    smooth non funziona mai
 
     OPZIONALI:
 

@@ -99,9 +99,9 @@ float& Tensor::operator()(int i, int j, int k) {
     
     if (k < 0 || k > d)
         throw(index_out_of_bound());
-    else if (i < 0 || i > r)
+    if (i < 0 || i > r)
         throw(index_out_of_bound());
-    else if (j < 0 || j > c)
+    if (j < 0 || j > c)
         throw(index_out_of_bound());
     else
         return (data[k][(i * c) + j]);
@@ -462,7 +462,7 @@ Tensor Tensor::convolve(const Tensor &f)const {
 
     new_conv_tensor.clamp(0,255);
 
-    new_conv_tensor.rescale();
+    //new_conv_tensor.rescale();
 
     return new_conv_tensor;
 }
