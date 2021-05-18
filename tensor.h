@@ -430,6 +430,14 @@ public:
      */
     void write_file(string filename);
 
+    /**
+     * Swaps two channels of a tensor.
+     * 
+     * @param a the first channel to swap
+     * 
+     * @param a the second channel to swap
+     */
+    void swap_channel(int a, int b);
 };
 
 #endif

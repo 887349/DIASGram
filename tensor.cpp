@@ -87,9 +87,9 @@ float Tensor::operator()(int i, int j, int k) const {
 
     if(k < d || k < d)
         throw(index_out_of_bound());
-    else if (i < r || i < r)
+    if (i < r || i < r)
         throw(index_out_of_bound());
-    else if (j < c || j < c)
+    if (j < c || j < c)
         throw(index_out_of_bound());
     else
         return data[k][(i*c)+j];
@@ -592,4 +592,11 @@ void Tensor::write_file(string filename) {
         throw(unable_to_write_file());
 
     f.close();
+}
+
+void Tensor::swap_channel(int a, int b){
+    float *temp;
+    temp = data[a];
+    data[a] = data[b];
+    data[b] = temp;
 }

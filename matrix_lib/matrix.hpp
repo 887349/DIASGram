@@ -18,3 +18,5 @@ void write_file(std::string filename, TYPE **&data, int d, int r, int c);
 float getMax(TYPE **&data, int k, int r, int c, int d);
 
 float getMax(TYPE **&data, int k, int r, int c, int d);
+
+void swap_channel(TYPE **&data, int a, int b);

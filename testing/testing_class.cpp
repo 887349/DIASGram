@@ -3,7 +3,8 @@
 #include <random>
 #include <math.h>
 #include <fstream>
-#include "../dais_exc.h"n
+
+#include "../dais_exc.h"
 
 #define TYPE float
 
@@ -554,6 +555,8 @@ public:
      */
     void write_file(string filename);
 
+    void swap_channel(int a, int b);
+
 };
 
 /**
@@ -644,9 +647,9 @@ float& Tensor::operator()(int i, int j, int k) {
 
     if (k < 0 || k > d)
         throw(index_out_of_bound());
-    else if (i < 0 || i > r)
+    if (i < 0 || i > r)
         throw(index_out_of_bound());
-    else if (j < 0 || j > c)
+    if (j < 0 || j > c)
         throw(index_out_of_bound());
     else
         return data[k][(i * c) + j];
@@ -1148,19 +1151,21 @@ void Tensor::write_file(string filename) {
     f.close();
 }
 
-
+void Tensor::swap_channel(int a, int b){
+    float *temp;
+    temp = data[a];
+    data[a] = data[b];
+    data[b] = temp;
+}
 
 int main(){
 
-    Tensor a(5, 5, 3);
-    
-    a.init_random();
-    cout << a << endl;
-    a.rescale(2);
-    cout << a << endl;
+    Tensor a(10, 10, 3, 8);
 
-    cout << "min:" << (a.getMin(1)) << endl;
-    cout << "max:" << (a.getMax(1)) << endl;
+    cout << a;
+    a.rescale(5);
+    cout << a;
+    
 
     return 0;
 }
