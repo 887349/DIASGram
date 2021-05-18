@@ -7,10 +7,6 @@ TO DO TENSOR:
 
 TO DO DAISGram:
 
-    Mi    DAISGram DAISGram::warhol()
-
-    Mi    DAISGram DAISGram::smooth(int h)
-
     Ma    DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5)
 
     OPZIONALI:

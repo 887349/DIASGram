@@ -169,7 +169,12 @@ DAISGram DAISGram::emboss(){
 }
 
 DAISGram DAISGram::smooth(int h=3){
+    DAISGram res;
+    Tensor filter(h, h, data.depth(), 1/(h*h));
 
+    res.data = this->data.convolve(filter);
+
+    return res;
 }
 
 DAISGram DAISGram::edge(){
@@ -185,9 +190,11 @@ DAISGram DAISGram::edge(){
     return res;
 }
 
+/*
 DAISGram DAISGram::blend(const DAISGram & rhs, float alpha=0.5){
 
 }
+
 
 DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[]){
 
@@ -196,3 +203,4 @@ DAISGram DAISGram::greenscreen(DAISGram & bkg, int rgb[], float threshold[]){
 DAISGram DAISGram::equalize(){
 
 }
+*/
