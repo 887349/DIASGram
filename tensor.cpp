@@ -462,7 +462,7 @@ Tensor Tensor::convolve(const Tensor &f)const {
 
     new_conv_tensor.clamp(0,255);
 
-    new_conv_tensor.rescale();
+    //new_conv_tensor.rescale();
 
     return new_conv_tensor;
 }
