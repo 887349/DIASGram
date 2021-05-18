@@ -50,7 +50,6 @@ Tensor::Tensor(){
 }
 
 Tensor::Tensor(int r, int c, int d, float v) {
-    std::cout << "is"<<v<<endl;
     data = static_matrix_create(d, r, c);
     matrix_init(data, d, r, c, v);
 
@@ -463,7 +462,7 @@ Tensor Tensor::convolve(const Tensor &f)const {
 
     new_conv_tensor.clamp(0,255);
 
-    //new_conv_tensor.rescale();
+    new_conv_tensor.rescale();
 
     return new_conv_tensor;
 }
