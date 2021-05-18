@@ -50,6 +50,7 @@ Tensor::Tensor(){
 }
 
 Tensor::Tensor(int r, int c, int d, float v) {
+    std::cout << "is"<<v<<endl;
     data = static_matrix_create(d, r, c);
     matrix_init(data, d, r, c, v);
 
@@ -323,12 +324,12 @@ void Tensor::rescale(float new_max) {
             for (int j = 0; j < c; j++)
             {
                 if (max==min)
-                    this->data[k][i * c + j] = new_max;
+                    data[k][i * c + j] = new_max;
                 else
-                    this->data[k][i * c + j] = ((this->data[k][i * c + j] - min) / (max - min)) * new_max;
+                    data[k][i * c + j] = ((data[k][i * c + j] - min) / (max - min)) * new_max;
 
                 
-                if (this->data[k][i * c + j] < 0 || this->data[k][i * c + j] > new_max )
+                if (data[k][i * c + j] < 0 || data[k][i * c + j] > new_max )
                     throw(dimension_mismatch());
             }
         }

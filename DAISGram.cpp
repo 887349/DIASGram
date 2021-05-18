@@ -189,8 +189,10 @@ DAISGram DAISGram::smooth(int h){
     DAISGram res;
     if(h <= 0)
         throw(index_out_of_bound());
+    
+    float a = (float)1/(h*h);
 
-    Tensor filter(h, h, this->data.depth(), 1/(h*h));
+    Tensor filter(h, h, this->data.depth(), a);
 
     res.data = this->data.convolve(filter);
 

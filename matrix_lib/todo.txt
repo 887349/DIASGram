@@ -3,7 +3,7 @@ TO DO TENSOR:
     !! controllare che tutti i cicli abbiano le variabili giuste e non delle costanti o variabili sbagliate !! 
     !! TESTARE le funzioni prima di pusharle !!
 
-    Tensor::rescale ha i "this->" ch potrebbero essere ridondanti
+    Tensor::rescale non ha più i "this->" ch potrebbero essere ridondanti
 
 TO DO DAISGram:
 
@@ -11,7 +11,7 @@ TO DO DAISGram:
 
     sahrp, emboss, edge non funzionano con rescale attivato in convolve()
 
-    smooth non funziona mai
+    smooth funziona sempre UOMOOOOO
 
     OPZIONALI:
 
