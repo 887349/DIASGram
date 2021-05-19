@@ -218,14 +218,24 @@ DAISGram DAISGram::edge(){
 
 
 DAISGram DAISGram::blend(const DAISGram & rhs, float alpha){
-
-    if (this->getRows()!=rhs->getRows() or this->getRows()!=rhs->getRows())
-        throw(dimension_mismatch);
+    if (this->getRows() != rhs.data.rows() || this->getCols() != rhs.data.cols() || this->getDepth() != rhs.data.depth()) {
+        cout << this->getRows() <<" "<< rhs.data.rows() <<" "<<this->getCols() <<" "<< rhs.data.cols()<<" "<< this->getDepth() <<" "<< rhs.data.depth() << endl;
+        throw(dimension_mismatch());
+    }
 
     DAISGram res;
+    res.data = data;
+    
+    
+    for(int k=0; k<getDepth(); k++) {    
+        for (int i=0; i<getRows(); i++){
+            for(int j=0; j<getCols(); j++){
+                cout<<alpha<<" " <<i<<j<<k<<endl;
+                res.data(i,j,k) =(alpha * res.data(i,j,k)) + ((1-alpha) * rhs.data.operator(i,j,k));
+            }
+        }    
+    }
 
-    res.data = alpha*this.data + (1-alpha)*rhs.data;
-    // Non sono sicura se basti cosi o se serva un ciclo
     return res;
 }
 
