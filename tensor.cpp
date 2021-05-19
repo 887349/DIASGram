@@ -85,11 +85,11 @@ Tensor::~Tensor() {
 
 float Tensor::operator()(int i, int j, int k) const {
 
-    if(k < d || k < d)
+    if(k < 0 || k > d)
         throw(index_out_of_bound());
-    if (i < r || i < r)
+    if (i < 0|| i > r)
         throw(index_out_of_bound());
-    if (j < c || j < c)
+    if (j < 0 || j > c)
         throw(index_out_of_bound());
     else
         return data[k][(i*c)+j];
